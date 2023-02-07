@@ -1,5 +1,7 @@
 # drm_tool
 
+Must use with `sudo` for use in ArkOS for devices with hdmi out such as the RG353 and RG503 series devices.
+
 A simple tool for getting drm info and setting properties.
 
 This tool came as an experiment when trying to use audio through HDMI in a ATI card. Audio started to work after starting Xorg.
