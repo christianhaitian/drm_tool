@@ -67,8 +67,9 @@ const char* get_card_name(DrmToolArgs* args)
 	}
 
 	while((ent = readdir(dir)) != NULL){
+		//char* file = "renderD128";
 		char* file = ent->d_name;
-		if(file[0] != 'c' || file[1] != 'a' || file[2] != 'r' || file[3] != 'd')
+		if(file[0] != 'r' || file[1] != 'e' || file[2] != 'n' || file[3] != 'd')
 			continue;
 
 		sprintf(card_path, "%s%s", DRM_PATH, file);
@@ -87,8 +88,8 @@ void drm_set_property(DrmToolArgs* args,  drmModeConnector *conn, drmModePropert
 				if(strcmp(prop->name, args->prop_name))
 					return;
 
-				int ret =  drmModeConnectorSetProperty(args->drm_fd, conn->connector_id, prop->prop_id, args->value);
-				printf("Setting '%s' -> %d - ret: %d :: connector_id: %d prop_id: %d \n", args->prop_name, args->value, ret, conn->connector_id, prop->prop_id);
+				//int ret =  drmModeConnectorSetProperty(args->drm_fd, conn->connector_id, prop->prop_id, args->value);
+				//printf("Setting '%s' -> %d - ret: %d :: connector_id: %d prop_id: %d \n", args->prop_name, args->value, ret, conn->connector_id, prop->prop_id);
 			}
 			break;
 
@@ -107,11 +108,11 @@ void drm_set_property(DrmToolArgs* args,  drmModeConnector *conn, drmModePropert
 					printf("#\tproperty value (%lu) not found in enum list!\n", old_value);
 				}
 			}
-			printf("    property (#%d):  %s = %lu", prop->prop_id, prop->name, old_value);
+			/*printf("    property (#%d):  %s = %lu", prop->prop_id, prop->name, old_value);
 			if (enum_name)
 				printf(" (%s)", enum_name);
 			printf("\n");
-			break;
+			break;*/
 		}
 	}
 }
@@ -123,12 +124,12 @@ void print_drm_connector(DrmToolArgs* args, drmModeConnector *conn)
 	if(args->cmd != DRM_TOOL_LIST)
 		return;
 
-	printf("  Connector: %d\n", conn->connector_id);
+	//printf("  Connector: %d\n", conn->connector_id);
 	if (conn->connection == DRM_MODE_CONNECTED) {
 		if (conn->count_modes != 0) {
 			int j;
 			for(j = 0; j < conn->count_modes; j++)
-				printf("    mode %2d: %-15s %dHz %ux%u\n", j, conn->modes[j].name, conn->modes[j].vrefresh, conn->modes[j].hdisplay,  conn->modes[j].vdisplay);
+				printf("%2d: %s %dHz \n", j, conn->modes[j].name, conn->modes[j].vrefresh);
 		}else
 			printf("    no valid mode for connector %u\n", conn->connector_id);
 	}else
@@ -202,12 +203,12 @@ void print_drm_card(DrmToolArgs* args)
 		return;
 
 	printf("Card %s\n", args->card);
-	print_drm_capability(args, "DUMP BUFFER", DRM_CAP_DUMB_BUFFER);
+	/*print_drm_capability(args, "DUMP BUFFER", DRM_CAP_DUMB_BUFFER);
 	print_drm_capability(args, "VBLANK HIGH CRTC", DRM_CAP_VBLANK_HIGH_CRTC);
 	print_drm_capability(args, "DUMB PREFERED DEPTH", DRM_CAP_DUMB_PREFERRED_DEPTH);
 	print_drm_capability(args, "DUMB PREFER SHADOW", DRM_CAP_DUMB_PREFER_SHADOW);
 	print_drm_capability(args, "PRIME", DRM_CAP_PRIME);
-	print_drm_capability(args, "TIMESTAMP MONOTONIC", DRM_CAP_TIMESTAMP_MONOTONIC);
+	print_drm_capability(args, "TIMESTAMP MONOTONIC", DRM_CAP_TIMESTAMP_MONOTONIC);*/
 }
 
 int main(int argc, const char* argv[])
